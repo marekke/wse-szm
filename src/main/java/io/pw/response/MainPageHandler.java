@@ -21,7 +21,7 @@ public class MainPageHandler implements ResponseHandler {
                     <td>$desc</td>
                     <td>$serial</td>
                     <td>$qty</td>
-                    <td>$reduceButton</td>
+                    <td>$reduceButton $deleteButton</td>
                 </tr>
             """;
     @Override
@@ -46,12 +46,19 @@ public class MainPageHandler implements ResponseHandler {
                     </form>
                     """.formatted(product.getId());
 
+            final String deleteButton = """
+                    <form method="POST" action="/delete?id=%d">
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                    """.formatted(product.getId());
+
             String row = ROW_TEMPLATE.replace("$no", String.valueOf(i + 1))
                     .replace("$name", product.getName())
                     .replace("$desc", product.getDesc())
                     .replace("$serial", product.getSerial())
                     .replace("$qty", String.valueOf(product.getQty()))
-                    .replace("$reduceButton", reduceButton);
+                    .replace("$reduceButton", reduceButton)
+                    .replace("$deleteButton", deleteButton);
             products.append(row);
         }
         return products.toString();

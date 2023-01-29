@@ -79,4 +79,16 @@ public class ProductRepository implements Repository<Product> {
 			throw new RuntimeException(ex);
 		}
 	}
+
+	public void delete(Product product) {
+		try {
+			String query = "DELETE FROM product WHERE id = ?";
+
+			final PreparedStatement statement = conn.prepareStatement(query);
+			statement.setLong(1, product.getId());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -70,6 +70,17 @@ public class WebServer {
                 os.close();
             });
 
+            httpServer.createContext("/delete", (httpExchange) -> {
+                byte[] response = ResponseHandler.ofPath(httpExchange).handle();
+
+                httpExchange.getResponseHeaders().set("Location", "/");
+                httpExchange.sendResponseHeaders(302, response.length);
+
+                final OutputStream os = httpExchange.getResponseBody();
+                os.write(response);
+                os.close();
+            });
+
             httpServer.start();
         } catch (IOException e) {
             throw new RuntimeException(e);

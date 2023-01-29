@@ -26,7 +26,10 @@ public interface ResponseHandler {
             }
         } else if ("/reduce".equals(path)) {
             return new PostReduceHandler(request.getRequestURI());
-        } else {
+        } else if ("/delete".equals(path)) {
+            return new DeleteHanlder(request.getRequestURI());
+        }
+        else {
             return () -> new byte[]{};
         }
     }
